@@ -92,7 +92,7 @@ public class UserController {
         if (userMap.get("identity") != null) user.setIdentity(Integer.parseInt(userMap.get("identity")));
         if (userMap.get("sum") != null) user.setSum(Integer.parseInt(userMap.get("sum")));
         if (userMap.get("noBack") != null) user.setNoBack(Integer.parseInt(userMap.get("noBack")));
-        System.out.println(user);
+//        System.out.println(user);
         if (getUserById(userId) != null) {
             int result = userService.updateUser(userId, user);
             if (result > 0) {

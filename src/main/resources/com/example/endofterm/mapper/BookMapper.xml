@@ -3,8 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.endofterm.mapper.BookMapper">
+    <resultMap id="bookMap" type="com.example.endofterm.pojo.Book">
+        <id column="book_id" property="book_id"/>
+        <result column="book_name" property="book_name"/>
+        <result column="book_author" property="book_author"/>
+        <result column="book_publisher" property="book_publisher"/>
+        <result column="book_price" property="book_price"/>
+        <result column="book_isbn" property="book_isbn"/>
+        <result column="book_introduction" property="book_introduction"/>
+        <result column="book_category" property="book_category"/>
+        <result column="borrowed_sum" property="borrowed_sum"/>
+    </resultMap>
     <!--List<Book> getAllBooks();-->
-    <select id="getAllBooks" resultType="com.example.endofterm.pojo.Book">
+    <select id="getAllBooks" resultMap="bookMap">
         select * from book
     </select>
     <!--Book getBookById(Integer bookId);-->
@@ -19,19 +30,59 @@
         from book
         where
             <if test="book_name!=null and book_name!=''">
-                book_name=#{book_name}
+                book_name like concat('%',#{book_name},'%')
             </if>
             <if test="book_author!=null and book_author!=''">
-                  and book_author=#{book_author}
+                and book_author like concat('%',#{book_author},'%')
             </if>
             <if test="book_publisher!=null and book_publisher!=''">
-                and book_publisher=#{book_publisher}
+                and book_publisher like concat('%',#{book_publisher},'%')
             </if>
     </select>
     <!--int addBook(Book book);-->
     <insert id="addBook" parameterType="com.example.endofterm.pojo.Book">
         insert
-        into book(book_name,book_author,book_publisher,publication_date,book_price,book_isbn,book_introduction,book_category,borrowed_sum)
-        values (#{book_name},#{book_author},#{book_publisher},#{publication_date},#{book_price},#{book_isbn},#{book_introduction},#{book_category},0)
+        into book(book_id,book_name,book_author,book_publisher,book_price,book_isbn,book_introduction,book_category,borrowed_sum)
+        values (null,#{book_name},#{book_author},#{book_publisher},#{book_price},#{book_isbn},#{book_introduction},#{book_category},0)
     </insert>
+    
+    <!--int updateBook(@Param("bookId") Integer bookId, Book book);-->
+    <update id="updateBook" parameterType="com.example.endofterm.pojo.Book">
+        update book
+        <set>
+            <if  test="bk.book_name!=null and bk.book_name!=''">
+                book_name=#{bk.book_name},
+            </if>
+            <if test="bk.book_author!=null and bk.book_author!=''">
+                book_author=#{bk.book_author},
+            </if>
+            <if test="bk.book_publisher!=null and bk.book_publisher!=''">
+                book_publisher=#{bk.book_publisher},
+            </if>
+            <if test="bk.book_price!=null ">
+                book_price=#{bk.book_price},
+            </if>
+            <if test="bk.book_isbn!=null and bk.book_isbn!=''">
+                book_isbn=#{bk.book_isbn},
+            </if>
+            <if test="bk.book_introduction!=null and bk.book_introduction!=''">
+                book_introduction=#{bk.book_introduction},
+            </if>
+            <if test="bk.book_category!=null">
+                book_category=#{bk.book_category},
+            </if>
+            <if test="bk.borrowed_sum!=null">
+                borrowed_sum=#{bk.borrowed_sum},
+            </if>
+            <trim suffixOverrides=","></trim>
+        </set>
+        where book_id=#{bookId}
+    </update>
+
+    <!--int deleteBook(Integer bookId);-->
+    <delete id="deleteBook">
+        delete
+        from book
+        where book_id=#{bookId}
+    </delete>
 </mapper>

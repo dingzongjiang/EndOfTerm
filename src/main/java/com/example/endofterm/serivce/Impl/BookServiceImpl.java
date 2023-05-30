@@ -34,4 +34,14 @@ public class BookServiceImpl implements BookService {
     public int addBook(Book book) {
         return bookMapper.addBook(book);
     }
+
+    @Override
+    public int updateBook(Integer bookId, Book book) {
+        return bookMapper.updateBook(bookId,book);
+    }
+
+    @Override
+    public int deleteBook(Integer bookId) {
+        return bookMapper.deleteBook(bookId);
+    }
 }

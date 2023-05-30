@@ -12,4 +12,8 @@ public interface BookService {
     List<Book> getBookByCondition(Book book);
 
     int addBook(Book book);
+
+    int updateBook(Integer bookId, Book book);
+
+    int deleteBook(Integer bookId);
 }

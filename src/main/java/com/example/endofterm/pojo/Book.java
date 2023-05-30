@@ -1,14 +1,13 @@
 package com.example.endofterm.pojo;
 
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class Book {
     private Integer book_id;
     private String book_name;
     private String book_author;
     private String book_publisher;
-    private Timestamp publication_date;
     private Double book_price;
     private String book_isbn;
     private String book_introduction;
@@ -25,12 +24,11 @@ public class Book {
         this.book_publisher = book_publisher;
     }
 
-    public Book(Integer book_id, String book_name, String book_author, String book_publisher, Timestamp publication_date, Double book_price, String book_isbn, String book_introduction, Integer book_category, Integer borrowed_sum) {
+    public Book(Integer book_id, String book_name, String book_author, String book_publisher, Double book_price, String book_isbn, String book_introduction, Integer book_category, Integer borrowed_sum) {
         this.book_id = book_id;
         this.book_name = book_name;
         this.book_author = book_author;
         this.book_publisher = book_publisher;
-        this.publication_date = publication_date;
         this.book_price = book_price;
         this.book_isbn = book_isbn;
         this.book_introduction = book_introduction;
@@ -100,22 +98,6 @@ public class Book {
      */
     public void setBook_publisher(String book_publisher) {
         this.book_publisher = book_publisher;
-    }
-
-    /**
-     * 获取
-     * @return publication_date
-     */
-    public Timestamp getPublication_date() {
-        return publication_date;
-    }
-
-    /**
-     * 设置
-     * @param publication_date
-     */
-    public void setPublication_date(Timestamp publication_date) {
-        this.publication_date = publication_date;
     }
 
     /**
@@ -199,6 +181,14 @@ public class Book {
     }
 
     public String toString() {
-        return "Book{book_id = " + book_id + ", book_name = " + book_name + ", book_author = " + book_author + ", book_publisher = " + book_publisher + ", publication_date = " + publication_date + ", book_price = " + book_price + ", book_isbn = " + book_isbn + ", book_introduction = " + book_introduction + ", book_category = " + book_category + ", borrowed_sum = " + borrowed_sum + "}";
+        return "Book{book_id = " + book_id +
+                ", book_name = " + book_name +
+                ", book_author = " + book_author +
+                ", book_publisher = " + book_publisher +
+                ", book_price = " + book_price +
+                ", book_isbn = " + book_isbn +
+                ", book_introduction = " + book_introduction +
+                ", book_category = " + book_category +
+                ", borrowed_sum = " + borrowed_sum + "}";
     }
 }
