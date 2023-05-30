@@ -1,10 +1,12 @@
-package com.example.endofterm.serivce;
+package com.example.endofterm.mapper;
 
 import com.example.endofterm.pojo.Book;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-public interface BookService {
+@Mapper
+public interface BookMapper {
     List<Book> getAllBooks();
 
     Book getBookById(Integer bookId);

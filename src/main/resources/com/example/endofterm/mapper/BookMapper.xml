@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.endofterm.mapper.BookMapper">
+    <!--List<Book> getAllBooks();-->
+    <select id="getAllBooks" resultType="com.example.endofterm.pojo.Book">
+        select * from book
+    </select>
+    <!--Book getBookById(Integer bookId);-->
+    <select id="getBookById" resultType="com.example.endofterm.pojo.Book">
+        select *
+        from book
+        where book_id=#{bookId};
+    </select>
+    <!--List<Book> getBookByCondition(Book book);-->
+    <select id="getBookByCondition" resultType="com.example.endofterm.pojo.Book">
+        select *
+        from book
+        where
+            <if test="book_name!=null and book_name!=''">
+                book_name=#{book_name}
+            </if>
+            <if test="book_author!=null and book_author!=''">
+                  and book_author=#{book_author}
+            </if>
+            <if test="book_publisher!=null and book_publisher!=''">
+                and book_publisher=#{book_publisher}
+            </if>
+    </select>
+    <!--int addBook(Book book);-->
+    <insert id="addBook" parameterType="com.example.endofterm.pojo.Book">
+        insert
+        into book(book_name,book_author,book_publisher,publication_date,book_price,book_isbn,book_introduction,book_category,borrowed_sum)
+        values (#{book_name},#{book_author},#{book_publisher},#{publication_date},#{book_price},#{book_isbn},#{book_introduction},#{book_category},0)
+    </insert>
+</mapper>

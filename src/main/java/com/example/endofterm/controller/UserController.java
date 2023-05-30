@@ -71,16 +71,21 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser/{userId}")
-    public List<User> deleteUserById(@PathVariable Integer userId) {
+    public String deleteUserById(@PathVariable Integer userId) {
         boolean flag = getUserById(userId).getIdentity() == 0 ? true : false;
         if (!flag) {
             int result = userService.deleteUserById(userId);
+            if (result>0) {
+                return "{\"message\":\"删除成功\",\"success\":\"true\"}";
+            }else {
+                return "{\"message\":\"删除失败\",\"success\":\"false\"}";
+            }
         }
-        return getAllUser();
+        return "{\"message\":\"删除失败，该用户是管理员，无法删除\",\"success\":\"false\"}";
     }
 
     @PatchMapping("/updateUser/{userId}")
-    public String updateUser(@PathVariable Integer userId, @RequestBody Map<String, String> userMap) {
+    public String updateUser(@PathVariable Integer userId, @RequestBody @NotNull Map<String, String> userMap) {
         User user = new User();
         if (userMap.get("username") != null) user.setUsername(userMap.get("username"));
         if (userMap.get("password") != null) user.setPassword(userMap.get("password"));
