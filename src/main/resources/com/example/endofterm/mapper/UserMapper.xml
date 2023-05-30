@@ -10,4 +10,67 @@
         FROM user
     </select>
 
+    <!--int addUser(User user);-->
+    <insert id="addUser" parameterType="com.example.endofterm.pojo.User">
+        insert
+        into user(id,username,password,sum,identity,noBack)
+        values (#{id},#{username},#{password},0,#{identity},0)
+    </insert>
+
+    <!--User getUserById(int userId);-->
+    <select id="getUserById" resultType="com.example.endofterm.pojo.User">
+        select *
+        from user
+        where id=#{userId};
+    </select>
+    <!--User getUserByName(String username);-->
+    <select id="getUserByName" resultType="com.example.endofterm.pojo.User">
+        select * from user
+        where username=#{username}
+    </select>
+    <!--int deleteUserById(Integer userId);-->
+    <delete id="deleteUserById">
+        delete
+        from user
+        where id=#{userId};
+    </delete>
+    <!--List<User> getUserByCondition(User user);-->
+    <select id="getUserByCondition" resultType="com.example.endofterm.pojo.User">
+        select *
+        from user
+        <where>
+            <if test="id != null and id!=''">
+                id=#{id}
+            </if>
+            <if test="username != null and username!=''">
+                AND username=#{username}
+            </if>
+            <if test="identity != null and identity!=''">
+                AND identity=#{identity}
+            </if>
+        </where>
+    </select>
+
+    <!--int updateUser(@Param("userId") Integer userId, @Param("user") User user);-->
+    <update id="updateUser" parameterType="com.example.endofterm.pojo.User">
+        update user
+        <set> <if test="user.username != null and user.username!=''">
+                username=#{user.username},
+            </if>
+            <if test="user.password != null and user.password!=''">
+                password=#{user.password},
+            </if>
+            <if test="user.sum != null ">
+                sum=#{user.sum},
+            </if>
+            <if test="user.identity != null" >
+                identity=#{user.identity},
+            </if>
+            <if test="user.noBack != null" >
+                noBack=#{user.noBack},
+            </if>
+            <trim suffixOverrides=","></trim>
+        </set>
+        where id=#{userId}
+    </update>
 </mapper>

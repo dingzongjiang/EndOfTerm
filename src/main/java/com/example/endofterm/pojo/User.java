@@ -16,6 +16,12 @@ public class User {
         this.password = password;
     }
 
+    public User(Integer id, String username, Integer identity) {
+        this.id = id;
+        this.username = username;
+        this.identity = identity;
+    }
+
     public User(Integer id, String username, String password, Integer sum, Integer identity, Integer noBack) {
         this.id = id;
         this.username = username;
