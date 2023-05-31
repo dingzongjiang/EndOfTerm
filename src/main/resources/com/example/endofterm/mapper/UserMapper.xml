@@ -2,12 +2,25 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.endofterm.mapper.UserMapper">
+<mapper namespace="com.example.endofterm.mapper.UserMapper" >
 
+    <resultMap id="userMap" type="com.example.endofterm.pojo.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="sum" property="sum"/>
+        <result column="noBack" property="noBack"/>
+        <result column="identity" property="identity"/>
+        <association property="role" javaType="com.example.endofterm.pojo.Role">
+            <id column="role_id" property="role_id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
     <!--List<User> getAllUser();-->
-    <select id="getAllUser" resultType="com.example.endofterm.pojo.User">
-        SELECT *
-        FROM user
+    <select id="getAllUser" resultMap="userMap">
+        SELECT u.*,r.*
+        FROM user u
+        left join role r on u.identity=r.role_id
     </select>
 
     <!--int addUser(User user);-->

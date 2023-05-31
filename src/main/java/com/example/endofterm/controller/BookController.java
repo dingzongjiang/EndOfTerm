@@ -84,13 +84,14 @@ public class BookController {
             book.setBorrowed_sum(Integer.parseInt(bookMap.get("borrowed_sum").toString()));
         return book;
     }
+
     @DeleteMapping("/deleteBook/{bookId}")
     public String deleteBook(@PathVariable Integer bookId) {
-        if (getBookById(bookId)!=null) {
+        if (getBookById(bookId) != null) {
             int result = bookService.deleteBook(bookId);
             if (result > 0) {
                 return "{\"message\":\"删除成功\",\"success\":\"true\"}";
-            }else {
+            } else {
                 return "{\"message\":\"删除失败\",\"success\":\"false\"}";
             }
         }
