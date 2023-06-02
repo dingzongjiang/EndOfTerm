@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.endofterm.mapper.BorrowRecordMapper" >
+    <insert id="addBorrowRecord" parameterType="com.example.endofterm.pojo.BorrowRecord">
+        insert
+        into borrow_record(borrow_id,book_id,user_id,borrow_date,back_date)
+        values (null,#{book_id},#{user_id},#{borrow_date},null)
+    </insert>
+</mapper>

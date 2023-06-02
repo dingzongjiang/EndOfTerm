@@ -13,10 +13,17 @@
         <result column="book_introduction" property="book_introduction"/>
         <result column="book_category" property="book_category"/>
         <result column="borrowed_sum" property="borrowed_sum"/>
+        <result column="isBack" property="isBack"/>
+        <association property="category" javaType="com.example.endofterm.pojo.Category">
+            <id column="category_id" property="category_id"/>
+            <result column="category_name" property="category_name"/>
+        </association>
     </resultMap>
     <!--List<Book> getAllBooks();-->
     <select id="getAllBooks" resultMap="bookMap">
-        select * from book
+        select b.*,c.*
+        from book b
+        left join category c on b.book_category=c.category_id
     </select>
     <!--Book getBookById(Integer bookId);-->
     <select id="getBookById" resultType="com.example.endofterm.pojo.Book">
@@ -42,8 +49,8 @@
     <!--int addBook(Book book);-->
     <insert id="addBook" parameterType="com.example.endofterm.pojo.Book">
         insert
-        into book(book_id,book_name,book_author,book_publisher,book_price,book_isbn,book_introduction,book_category,borrowed_sum)
-        values (null,#{book_name},#{book_author},#{book_publisher},#{book_price},#{book_isbn},#{book_introduction},#{book_category},0)
+        into book(book_id,book_name,book_author,book_publisher,book_price,book_isbn,book_introduction,book_category,borrowed_sum,isBack)
+        values (null,#{book_name},#{book_author},#{book_publisher},#{book_price},#{book_isbn},#{book_introduction},#{book_category},0,0)
     </insert>
     
     <!--int updateBook(@Param("bookId") Integer bookId, Book book);-->
@@ -73,6 +80,9 @@
             </if>
             <if test="bk.borrowed_sum!=null">
                 borrowed_sum=#{bk.borrowed_sum},
+            </if>
+            <if test="bk.isBack!=null">
+                isBack=#{bk.isBack},
             </if>
             <trim suffixOverrides=","></trim>
         </set>

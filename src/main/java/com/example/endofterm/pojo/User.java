@@ -25,4 +25,13 @@ public class User {
         this.noBack = noBack;
         this.role = role;
     }
+
+    public User(Integer id, String username, String password, Integer sum, Integer noBack, Role role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.sum = sum;
+        this.noBack = noBack;
+        this.role = role;
+    }
 }

@@ -76,8 +76,6 @@ public class BookController {
             book.setBook_price(Double.parseDouble(bookMap.get("book_price").toString()));
         if (bookMap.get("book_isbn") != null)
             book.setBook_isbn(bookMap.get("book_isbn").toString());
-        if (bookMap.get("book_category") != null)
-            book.setBook_category(Integer.parseInt(bookMap.get("book_category").toString()));
         if (bookMap.get("book_introduction") != null)
             book.setBook_introduction(bookMap.get("book_introduction").toString());
         if (bookMap.get("borrowed_sum") != null)
