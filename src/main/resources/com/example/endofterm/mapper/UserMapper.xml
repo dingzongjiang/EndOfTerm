@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.endofterm.mapper.UserMapper" >
+<mapper namespace="com.example.endofterm.mapper.UserMapper">
 
     <resultMap id="userMap" type="com.example.endofterm.pojo.User">
         <id column="id" property="id"/>
@@ -18,69 +18,86 @@
     </resultMap>
     <!--List<User> getAllUser();-->
     <select id="getAllUser" resultMap="userMap">
-        SELECT u.*,r.*
+        SELECT u.*, r.*
         FROM user u
-        left join role r on u.identity=r.role_id
+        left join role r on u.identity = r.role_id
+        order by u.identity asc;
     </select>
 
     <!--int addUser(User user);-->
     <insert id="addUser" parameterType="com.example.endofterm.pojo.User">
         insert
-        into user(id,username,password,sum,identity,noBack)
-        values (#{id},#{username},#{password},0,#{identity},0)
+        into user(id, username, password, sum, identity, noBack)
+        values (null, #{username}, #{password}, 0, #{identity}, 0)
     </insert>
 
     <!--User getUserById(int userId);-->
     <select id="getUserById" resultMap="userMap">
-        select *
-        from user
-        where id=#{userId};
+        SELECT u.*, r.*
+        FROM user u
+        left join role r on u.identity = r.role_id
+        where u.id = #{userId};
     </select>
     <!--User getUserByName(String username);-->
     <select id="getUserByName" resultMap="userMap">
-        select * from user
-        where username like concat('%',#{username},'%')
+        SELECT u.*, r.*
+        FROM user u
+        left join role r on u.identity = r.role_id
+        where u.username like concat('%', #{username}, '%')
     </select>
     <!--int deleteUserById(Integer userId);-->
     <delete id="deleteUserById">
         delete
         from user
-        where id=#{userId};
+        where id = #{userId};
     </delete>
     <!--List<User> getUserByCondition(User user);-->
     <select id="getUserByCondition" resultMap="userMap">
-        select *
-        from user
+        SELECT u.*, r.*
+        FROM user u
+        left join role r on u.identity = r.role_id
         <where>
+            <trim suffixOverrides="AND"></trim>
+            1=1
             <if test="id != null and id!=''">
-                id=#{id}
+                AND u.id = #{id}
             </if>
             <if test="username != null and username!=''">
-                AND username like concat('%',#{username},'%')
+                AND u.username like concat('%', #{username}, '%')
             </if>
             <if test="identity != null and identity!=''">
-                AND identity=#{identity}
+                AND  u.identity= #{identity}
             </if>
+
         </where>
     </select>
 
     <!--int updateUser(@Param("userId") Integer userId, @Param("user") User user);-->
     <update id="updateUser" parameterType="com.example.endofterm.pojo.User">
         update user
-        <set> <if test="user.username != null and user.username!=''">
-                username=#{user.username},
+        <set>
+            <if test="user.username != null and user.username!=''">
+                username
+                =
+                #{user.username},
             </if>
             <if test="user.password != null and user.password!=''">
-                password=#{user.password},
+                password
+                =
+                #{user.password},
             </if>
             <if test="user.sum != null ">
-                sum=#{user.sum},
+                sum=
+                #{user.sum},
             </if>
-            <if test="user.identity != null" >
-                identity=#{user.identity},
+            <if test="user.identity != null">
+                identity=
+                #{user.identity},
             </if>
-            <if test="user.noBack != null" >
-                noBack=#{user.noBack},
+            <if test="user.noBack != null">
+                noBack
+                =
+                #{user.noBack},
             </if>
             <trim suffixOverrides=","></trim>
         </set>

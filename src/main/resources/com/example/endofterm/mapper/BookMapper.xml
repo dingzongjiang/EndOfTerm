@@ -24,33 +24,38 @@
         select b.*,c.*
         from book b
         left join category c on b.book_category=c.category_id
+        order by b.borrowed_sum desc
     </select>
     <!--Book getBookById(Integer bookId);-->
-    <select id="getBookById" resultType="com.example.endofterm.pojo.Book">
-        select *
-        from book
-        where book_id=#{bookId};
+    <select id="getBookById" resultMap="bookMap">
+        select b.*,c.*
+        from book b
+                 left join category c on b.book_category=c.category_id
+        where b.book_id=#{bookId};
     </select>
     <!--List<Book> getBookByCondition(Book book);-->
-    <select id="getBookByCondition" resultType="com.example.endofterm.pojo.Book">
-        select *
-        from book
+    <select id="getBookByCondition" resultMap="bookMap">
+        select b.*,c.*
+        from book b
+        left join category c on b.book_category=c.category_id
         where
             <if test="book_name!=null and book_name!=''">
-                book_name like concat('%',#{book_name},'%')
+                b.book_name like concat('%',#{book_name},'%')
             </if>
             <if test="book_author!=null and book_author!=''">
-                and book_author like concat('%',#{book_author},'%')
+                and b.book_author like concat('%',#{book_author},'%')
             </if>
             <if test="book_publisher!=null and book_publisher!=''">
-                and book_publisher like concat('%',#{book_publisher},'%')
+                and b.book_publisher like concat('%',#{book_publisher},'%')
             </if>
     </select>
     <!--int addBook(Book book);-->
     <insert id="addBook" parameterType="com.example.endofterm.pojo.Book">
         insert
-        into book(book_id,book_name,book_author,book_publisher,book_price,book_isbn,book_introduction,book_category,borrowed_sum,isBack)
-        values (null,#{book_name},#{book_author},#{book_publisher},#{book_price},#{book_isbn},#{book_introduction},#{book_category},0,0)
+        into book(book_id,book_name,book_author,book_publisher,book_price,
+                  book_isbn,book_introduction,book_category,borrowed_sum,isBack)
+        values (null,#{book_name},#{book_author},#{book_publisher},#{book_price},
+                #{book_isbn},#{book_introduction},#{book_category},0,1)
     </insert>
     
     <!--int updateBook(@Param("bookId") Integer bookId, Book book);-->

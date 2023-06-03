@@ -15,7 +15,6 @@ public class User {
     public User() {
     }
 
-
     public User(Integer id, String username, String password, Integer sum, Integer identity, Integer noBack, Role role) {
         this.id = id;
         this.username = username;
@@ -26,12 +25,14 @@ public class User {
         this.role = role;
     }
 
-    public User(Integer id, String username, String password, Integer sum, Integer noBack, Role role) {
-        this.id = id;
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.sum = sum;
-        this.noBack = noBack;
-        this.role = role;
+    }
+
+    public User(String username, String password, Integer identity) {
+        this.username = username;
+        this.password = password;
+        this.identity = identity;
     }
 }
